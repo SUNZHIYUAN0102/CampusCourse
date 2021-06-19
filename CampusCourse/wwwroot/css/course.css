@@ -59,6 +59,15 @@
     border: 1px solid #ccc;
 }
 
+.line select {
+    width: 200px;
+    outline: none;
+    height: 35px;
+    border-radius: 5px;
+    padding-left: 5px;
+    border: 1px solid #ccc;
+}
+
 .line div {
     float: left;
     margin-right: 10px;

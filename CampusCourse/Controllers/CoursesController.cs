@@ -81,5 +81,19 @@ namespace CampusCourse.Controllers
 
             return this.View(model);
         }
+
+        public async Task<IActionResult> Delete(Guid? id)
+        {
+            if (id == null)
+            {
+                return this.NotFound();
+            }
+
+            var course = await this.context.Courses.SingleOrDefaultAsync(m => m.Id == id);
+
+            this.context.Courses.Remove(course);
+            await context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
