@@ -1,0 +1,93 @@
+﻿@model CampusCourse.Models.CourseViewModel.CreateCourseViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no,maximum-scale=1.0,minimum-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/css/course.css" />
+</head>
+
+<body>
+    <div class="whole">
+        <header class="hd">
+            <h1>Course creation</h1>
+        </header>
+        <form method="post" asp-controller="Courses" asp-action="Create" asp-route-prototypeId="@ViewBag.PrototypeId">
+            <div class="bd w">
+                <div class="fir">
+                    <p>Course Name</p>
+                    <input type="text" asp-for="Name">
+                </div>
+
+                <div class="sec">
+                    <div class="left">
+                        <p>Credits</p>
+                        <input type="number" placeholder="0" asp-for="Credits">
+                    </div>
+                    <div class="rig">
+                        <p>Languages</p>
+                        <input asp-for="Language" value="Russian" type="radio"><span>Russian</span>
+                        <input asp-for="Language" value="English" type="radio"><span>English</span>
+                        <input asp-for="Language" value="German" type="radio"><span>German</span>
+                        <input asp-for="Language" value="Franch" type="radio"><span>Franch</span>
+                    </div>
+                </div>
+
+                <div class="line">
+                    <div class="year">
+                        <p>Year</p>
+                        <input type="text" asp-for="Year">
+                    </div>
+                    <div class="semester">
+                        <p>Semester</p>
+                        <input type="text" asp-for="Semester">
+                    </div>
+                    <div class="total">
+                        <p>Total Student Count</p>
+                        <input type="text" asp-for="TotalStudents">
+                    </div>
+                    <div class="min">
+                        <p>Students Minimum Count</p>
+                        <input type="text" asp-for="MinStudents">
+                    </div>
+                </div>
+
+                <div class="thi">
+                    <p>Requirements</p>
+                    <textarea asp-for="Requirements" name="Requirements" id="" cols="30" rows="10"></textarea>
+                </div>
+
+                <div class="fourth">
+                    <p>Annotation</p>
+                    <textarea asp-for="Annotation" name="Annotation" id="" cols="30" rows="10"></textarea>
+                </div>
+
+                <div class="fifth">
+                    <p>Materials</p>
+                    <textarea asp-for="Material" name="Material" id="" cols="30" rows="10"></textarea>
+                </div>
+
+                <div class="sixth">
+                    <p>Literature</p>
+                    <textarea asp-for="Literature" name="Literature" id="" cols="30" rows="10"></textarea>
+                </div>
+
+                <div class="seventh">
+                    <button type="submit">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
+
+<script src="~/js/ckeditor/ckeditor.js"></script>
+<script>CKEDITOR.replace('Requirements');</script>
+<script>CKEDITOR.replace('Annotation');</script>
+<script>CKEDITOR.replace('Material');</script>
+<script>CKEDITOR.replace('Literature');</script>

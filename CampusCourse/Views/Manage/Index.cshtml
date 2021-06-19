@@ -1,0 +1,104 @@
+﻿
+@model CampusCourse.Models.ManageViewModel.ProfileViewModel
+
+@{ ViewData["Title"] = "Manage your account";}
+
+<p class="text-success">@ViewData["StatusMessage"]</p>
+
+
+<h2>Change your account settings</h2>
+
+<div class="row">
+    <div class="col-md">
+        <div class="list-group" id="myList" role="tablist">
+            <a class="list-group-item list-group-item-action active" data-toggle="list" href="#changePassword" role="tab">Change Password</a>
+            <a class="list-group-item list-group-item-action" data-toggle="list" href="#changeEmail" role="tab">Change Email</a>
+            <a class="list-group-item list-group-item-action" data-toggle="list" href="#profilePhoto" role="tab">Profile Photo</a>
+            <a class="list-group-item list-group-item-action" data-toggle="list" href="#changeUsername" role="tab">Change Username</a>
+        </div>
+    </div>
+    <div class="col-8">
+        <div class="tab-content">
+            <div class="tab-pane active" id="changePassword" role="tabpanel">
+                <form asp-controller="Manage" asp-action="ChangePassword" method="post" class="form-horizontal">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="@Model.changePasswordViewModel.OldPassword">Old Password</label>
+                        <input asp-for="@Model.changePasswordViewModel.OldPassword" class="form-control" />
+                        <span asp-validation-for="@Model.changePasswordViewModel.OldPassword" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="@Model.changePasswordViewModel.NewPassword">New Password</label>
+                        <input asp-for="@Model.changePasswordViewModel.NewPassword" class="form-control" />
+                        <span asp-validation-for="@Model.changePasswordViewModel.NewPassword" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="@Model.changePasswordViewModel.ConfirmPassword">Confirm Password</label>
+                        <input asp-for="@Model.changePasswordViewModel.ConfirmPassword" class="form-control" />
+                        <span asp-validation-for="@Model.changePasswordViewModel.ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <button type="submit" class="btn btn-primary btn-block">Change Password</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="tab-pane" id="changeEmail" role="tabpanel">
+                <form asp-controller="Manage" asp-action="ChangeEmail" method="post" class="form-horizontal">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group col-md-4">
+                        <label>Email</label>
+                        <input asp-for="@Model.changeEmailViewModel.NewEmail" class="form-control" />
+                        <span asp-validation-for="@Model.changeEmailViewModel.NewEmail" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <button type="submit" class="btn btn-primary btn-block">Change Email</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="tab-pane" id="profilePhoto" role="tabpanel">
+                <form asp-controller="Manage" asp-action="AddPhoto" method="post" class="form-horizontal" enctype="multipart/form-data">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group col-md-4">
+                        <img src="~/uploads/@ViewBag.ImagePath" class="img-thumbnail" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="@Model.user.ImagePath">Image Path</label>
+
+                        <input type="file" name="file" class="form-control" />
+                        <span asp-validation-for="@Model.user.ImagePath" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-3">
+                        <button type="submit" class="btn btn-primary btn-block">Upload Image</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="tab-pane" id="changeUsername" role="tabpanel">
+                <form asp-controller="Manage" asp-action="ChangeUsername" method="post" class="form-horizontal">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="@Model.changeUserNameViewModel.FirstName">FirstName</label>
+                        <input asp-for="@Model.changeUserNameViewModel.FirstName" class="form-control" value="@Model.changeUserNameViewModel.FirstName" />
+                        <span asp-validation-for="@Model.changeUserNameViewModel.FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label asp-for="@Model.changeUserNameViewModel.LastName">LastName</label>
+                        <input asp-for="@Model.changeUserNameViewModel.LastName" class="form-control" />
+                        <span asp-validation-for="@Model.changeUserNameViewModel.LastName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <button type="submit" class="btn btn-primary btn-block">Change UserName</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
