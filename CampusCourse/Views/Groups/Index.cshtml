@@ -11,7 +11,7 @@
             </h3>
         </div>
         <div class="card-body ">
-            @foreach(var prototype in ViewBag.Prototypes)
+            @foreach(var prototype in item.Prototypes)
             {
                 <a asp-action="Create" asp-controller="Courses" asp-route-prototypeId="@prototype.Id">@prototype.Name</a>
             }
@@ -19,7 +19,7 @@
         <div class="card-footer">
             @foreach(var course in ViewBag.Courses)
             {
-                <a>@course.Name</a>
+                <a asp-action="Details" asp-controller="Courses" asp-route-id="@course.Id">@course.Name</a>
             }
         </div>
     </div>

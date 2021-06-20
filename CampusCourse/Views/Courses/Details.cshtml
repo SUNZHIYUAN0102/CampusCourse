@@ -1,0 +1,142 @@
+﻿@model CampusCourse.Models.Course
+@inject CampusCourse.Services.UserService UserService
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/css/courseDetail.css" />
+</head>
+
+<body>
+    <h1>Campus Course - @Model.Name</h1>
+    <div class="main">
+        <ul class="course">
+            <li class="first">
+                <h2>Main course data</h2>
+                <a class="edit">Edit Course</a>
+            </li>
+            <li class="second">
+                <div class="left">
+                    <span class="element">STATUS</span>
+                    <span class="data">Midterm passed</span>
+                </div>
+                <a class="change">Change Status</a>
+            </li>
+            <li class="third">
+                <div class="left">
+                    <span class="element">Year</span>
+                    <span class="data">@Model.Year</span>
+                </div>
+                <div class="right">
+                    <span class="element">Semester</span>
+                    <span class="data">@Model.Semester</span>
+                </div>
+            </li>
+            <li class="fourth">
+                <div class="left">
+                    <span class="element">Creadits / Hours</span>
+                    <span class="data">@Model.Credits / 72,00</span>
+                </div>
+                <div class="right">
+                    <span class="element">Total Places Count</span>
+                    <span class="data">100</span>
+                </div>
+            </li>
+            <li class="fifth">
+                <div class="left">
+                    <span class="element">Student Assigned</span>
+                    <span class="data">24</span>
+                </div>
+                <div class="right">
+                    <span class="element">Requests for assigning in queue</span>
+                    <span class="data">0</span>
+                </div>
+            </li>
+            <li class="sixth">
+                <div class="left">
+                    <span class="element">Language</span>
+                    <span class="data">@Model.Language</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="tab">
+        <div class="tab_list" id='tabList'>
+            <ul class="tabul">
+                <li class="color">Requirements</li>
+                <li>Annotation</li>
+                <li>Materials</li>
+                <li>Literature</li>
+            </ul>
+        </div>
+        <div class="tab_con" id='tabCon'>
+            <div class="tab-item" style="display: block;">@Html.Raw(@Model.Requirements)</div>
+            <div class="tab-item" style="display: none;">@Html.Raw(@Model.Annotation)</div>
+            <div class="tab-item" style="display: none;">@Html.Raw(@Model.Material)</div>
+            <div class="tab-item" style="display: none;">@Html.Raw(@Model.Literature)</div>
+        </div>
+    </div>
+
+    <div class="tab2">
+        <div class="tab_list" id='tabList2'>
+            <ul class="tabul">
+                <li class="color">Teachers</li>
+                <li>Students</li>
+                <li>Schedule</li>
+                <li>Notifications</li>
+            </ul>
+        </div>
+        <div class="tab_con2" id='tabCon2'>
+            <div class="tab-item" style="display: block;">
+                <img src="~/uploads/@await UserService.GetTeacher(Model.CreatorId)" style="height:100px; width:100px" class="circle" />
+                <span>@Model.Creator.FullName</span>
+            </div>
+            <div class="tab-item" style="display: none;">Empty</div>
+            <div class="tab-item" style="display: none;">Empty</div>
+            <div class="tab-item" style="display: none;">Empty</div>
+        </div>
+    </div>
+
+
+    <script>
+        var tabList = document.getElementById('tabList');
+        var tabList2 = document.getElementById('tabList2');
+        var lis = tabList.querySelectorAll('li');
+        var lis2 = tabList2.querySelectorAll('li');
+        var tabCon = document.getElementById('tabCon');
+        var item = tabCon.getElementsByClassName('tab-item');
+        var tabCon2 = document.getElementById('tabCon2');
+        var item2 = tabCon2.getElementsByClassName('tab-item');
+        for (var i = 0; i < lis.length; i++) {
+            lis[i].setAttribute('index', i);
+            lis[i].onclick = function () {
+                for (var i = 0; i < lis.length; i++) {
+                    lis[i].className = '';
+                    item[i].style.display = 'none';
+                }
+                this.className = 'color';
+                var index = this.getAttribute('index');
+                item[index].style.display = 'block';
+            };
+        }
+
+        for (var i = 0; i < lis2.length; i++) {
+            lis2[i].setAttribute('index', i);
+            lis2[i].onclick = function () {
+                for (var i = 0; i < lis2.length; i++) {
+                    lis2[i].className = '';
+                    item2[i].style.display = 'none';
+                }
+                this.className = 'color';
+                var index = this.getAttribute('index');
+                item2[index].style.display = 'block';
+            };
+        }
+    </script>
+</body>
+</html>

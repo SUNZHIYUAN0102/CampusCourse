@@ -34,5 +34,14 @@ namespace CampusCourse.Services
 
             return Picture;
         }
+
+        public async Task<string> GetTeacher(string userId)
+        {
+            var user = await this.userManager.FindByIdAsync(userId);
+
+            var Picture = user.ImagePath;
+
+            return Picture;
+        }
     }
 }

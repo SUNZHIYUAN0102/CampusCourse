@@ -82,6 +82,15 @@ namespace CampusCourse.Controllers
             return this.View(model);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var course = await context.Courses
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            return View(course);
+        }
+
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)

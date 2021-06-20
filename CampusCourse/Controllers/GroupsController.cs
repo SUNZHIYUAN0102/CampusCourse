@@ -29,8 +29,6 @@ namespace CampusCourse.Controllers
             var groups = this.context.Groups
                 .Include(x => x.Prototypes).ThenInclude(Prototypes => Prototypes.Courses);
 
-
-            ViewBag.Prototypes = this.context.Prototypes;
             ViewBag.Courses = this.context.Courses;
                
             return View(await groups.ToListAsync());

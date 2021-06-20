@@ -1,0 +1,190 @@
+﻿*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+h1 {
+    width: 600px;
+    margin: 10px auto;
+    text-align: center;
+}
+
+.main {
+    width: 900px;
+    height: 285px;
+    border: 2px solid #ccc;
+    margin: 5px auto;
+    box-shadow: 0px 0px 5px 0px #ccc;
+    border-radius: 5px;
+}
+
+.course {
+    list-style: none;
+    position: relative;
+}
+
+.course li {
+    border-bottom: 1px solid black;
+}
+
+.course li:first-child {
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+}
+
+.course li:nth-child(n + 2) {
+    width: 100%;
+    height: 45px;
+    line-height: 45px;
+}
+
+.course li:last-child {
+    border-bottom: none;
+}
+
+.first h2 {
+    float: left;
+    line-height: 60px;
+    font-weight: bold;
+    margin-left: 20px;
+}
+
+.first .edit {
+    float: right;
+    width: 120px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    margin-top: 15px;
+    margin-right: 40px;
+    outline: none;
+    background-color: rgb(233, 170, 52);
+    border: 0;
+    border-radius: 5px;
+}
+
+.second .change {
+    float: right;
+    width: 115px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    margin-top: 7.5px;
+    margin-right: 40px;
+    outline: none;
+    background-color: rgb(88, 207, 88);
+    border: 0;
+    border-radius: 5px;
+    color: white;
+}
+
+.element {
+    margin-left: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    color: gray;
+}
+
+.data {
+    margin-left: 140px;
+    font-size: 12px;
+}
+
+.left {
+    float: left;
+    width: 285px;
+    height: 100%;
+    margin-left: 20px;
+}
+
+.course li:nth-child(2) .left {
+    position: absolute;
+    width: 285px;
+    height: 100%;
+    left: 20px;
+    margin-left: 0;
+}
+
+.right {
+    float: left;
+    width: 285px;
+    height: 100%;
+    margin-left: 155px;
+}
+
+.left .element {
+    margin-left: 0;
+    font-size: 12px;
+    font-weight: bold;
+    color: gray;
+}
+
+.left .data {
+    float: right;
+    font-size: 12px;
+    margin-left: 0;
+}
+
+.right .element {
+    margin-left: 0;
+    font-size: 12px;
+    font-weight: bold;
+    color: gray;
+}
+
+.right .data {
+    float: right;
+    font-size: 12px;
+    margin-left: 0;
+}
+
+.tab {
+    margin: 40px auto;
+    width: 900px;
+    height: auto;
+    overflow: hidden;
+}
+
+.tab2 {
+    margin: 40px auto;
+    width: 900px;
+    height: 200px;
+    overflow: hidden;
+}
+
+.tabul{
+    list-style: none;
+}
+
+.tab_list .tabul li {
+    border: none;
+    float: left;
+    width: 120px;
+    height: 50px;
+    line-height: 50px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+    .tab_list .tabul li.color {
+        border-bottom: 3px solid blue;
+    }
+
+.tab_con {
+    width: 100%;
+    margin-top: 60px;
+    text-indent: 2em;
+    border: 1px solid black;
+}
+
+.tab_con2 {
+    width: 100%;
+    margin-top: 60px;
+    text-indent: 2em;
+    border: 1px solid black;
+}
+
+.tab-item{
+    margin-top: 5px;
+}
