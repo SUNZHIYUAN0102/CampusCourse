@@ -76,7 +76,7 @@ namespace CampusCourse.Controllers
                 };
                 this.context.Courses.Add(course);
                 await this.context.SaveChangesAsync();
-                return RedirectToAction("Index", "Home");
+                return this.RedirectToAction("Details", "Prototypes", new { id = prototypeId });
             }
 
             return this.View(model);
@@ -99,10 +99,11 @@ namespace CampusCourse.Controllers
             }
 
             var course = await this.context.Courses.SingleOrDefaultAsync(m => m.Id == id);
+            var prototypeId = course.PrototypeId;
 
             this.context.Courses.Remove(course);
             await context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return this.RedirectToAction("Details", "Prototypes", new { id = prototypeId });
         }
     }
 }

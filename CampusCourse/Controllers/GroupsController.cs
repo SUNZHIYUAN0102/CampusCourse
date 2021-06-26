@@ -28,10 +28,18 @@ namespace CampusCourse.Controllers
         {
             var groups = this.context.Groups
                 .Include(x => x.Prototypes).ThenInclude(Prototypes => Prototypes.Courses);
-
-            ViewBag.Courses = this.context.Courses;
                
             return View(await groups.ToListAsync());
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var group = await context.Groups
+                .Include(x => x.Prototypes)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            return View(group);
         }
 
         [HttpGet]

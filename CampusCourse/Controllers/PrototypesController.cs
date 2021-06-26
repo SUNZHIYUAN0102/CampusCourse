@@ -28,6 +28,16 @@ namespace CampusCourse.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Details(Guid id)
+        {
+            var prototype = await context.Prototypes
+                .Include(x => x.Courses)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            return View(prototype);
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Create(Guid groupId)
         {
             var group = await this.context.Groups
@@ -65,7 +75,7 @@ namespace CampusCourse.Controllers
                 };
                 this.context.Prototypes.Add(prototype);
                 await this.context.SaveChangesAsync();
-                return RedirectToAction("Index", "Home");
+                return this.RedirectToAction("Details", "Groups", new { id = groupId });
             }
             return View(model);
         }
@@ -129,9 +139,11 @@ namespace CampusCourse.Controllers
             var prototype = await context.Prototypes
                 .FirstOrDefaultAsync(m => m.Id == id);
 
+            var groupId = prototype.GroupId;
+
             context.Prototypes.Remove(prototype);
             await context.SaveChangesAsync();
-            return RedirectToAction("Index", "Groups");
+            return this.RedirectToAction("Details", "Groups", new { id = groupId });
         }
     }
 }

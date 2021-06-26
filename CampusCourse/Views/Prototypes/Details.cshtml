@@ -1,0 +1,46 @@
+﻿@model CampusCourse.Models.Prototype
+
+<a asp-action="Create" asp-controller="Courses" asp-route-prototypeId="@Model.Id" class="btn btn-primary" style="margin-bottom: 5px;">Add Courses</a>
+
+<table class="table table-striped" id="Exampledatatable">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Type</th>
+            <th scope="col">Year</th>
+            <th scope="col">Semester</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Courses)
+        {
+        <tr>
+            <th scope="row"><a asp-action="Details" asp-controller="Courses" asp-route-id="@item.Id">@item.Name</a></th>
+
+            <td>Courses</td>
+            <td>@item.Year</td>
+            <td>@item.Semester</td>
+            <td>
+                <a class="btn btn-success" asp-action="Edit" asp-controller="Courses" asp-route-id="@item.Id">Edit</a>
+                <a class="btn btn-danger" asp-action="Delete" asp-controller="Courses" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+        }
+
+    </tbody>
+</table>
+
+
+@section Scripts {
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.css" />
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.23/datatables.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+            $("#Exampledatatable").DataTable();
+        });
+    </script>
+}
