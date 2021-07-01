@@ -22,6 +22,9 @@ namespace CampusCourse.Data
         public DbSet<StudentCourse> StudentCourses { get; set; }
         public DbSet<Review> Reviews { get; set; }
 
+        public DbSet<Schedule> Schedules { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

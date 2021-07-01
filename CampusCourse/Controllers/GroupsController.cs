@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 
 namespace CampusCourse.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class GroupsController : Controller
     {
         private readonly ApplicationDbContext context;
@@ -42,12 +41,14 @@ namespace CampusCourse.Controllers
             return View(group);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Create()
         {
             return this.View();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateGroupViewModel model)
@@ -67,6 +68,7 @@ namespace CampusCourse.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Edit(Guid? id)
         {
@@ -80,6 +82,7 @@ namespace CampusCourse.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid? id, EditGroupViewModel model)
@@ -96,6 +99,7 @@ namespace CampusCourse.Controllers
             return this.View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)

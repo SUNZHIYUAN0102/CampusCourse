@@ -52,7 +52,7 @@ namespace CampusCourse.Controllers
                         return RedirectToAction("ListUsers", "Admin");
                     }
 
-                    return this.RedirectToAction("Index", "Course");
+                    return this.RedirectToAction("Index", "Home");
                 }
 
                 this.ModelState.AddModelError(String.Empty, "Invalid login attempt.");

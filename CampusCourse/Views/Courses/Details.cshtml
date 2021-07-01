@@ -1,4 +1,4 @@
-﻿@model CampusCourse.Models.Course
+﻿@model CampusCourse.Models.CourseViewModel.CourseDetailViewModel
 @inject CampusCourse.Services.UserService UserService
 <!DOCTYPE html>
 <html lang="en">
@@ -8,16 +8,20 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <link rel="stylesheet" href="~/css/courseDetail.css" />
 </head>
 
 <body>
-    <h1>Campus Course - @Model.Name</h1>
+    <h1>Campus Course - @Model.course.Name</h1>
     <div class="main">
         <ul class="course">
             <li class="first">
                 <h2>Main course data</h2>
-                <a class="edit">Edit Course</a>
+                <form method="post" asp-action="Create" asp-controller="StudentCourse" asp-route-courseId="@Model.course.Id">
+                    <button class="edit">Join Course</button>
+                </form>
+                
             </li>
             <li class="second">
                 <div class="left">
@@ -29,17 +33,17 @@
             <li class="third">
                 <div class="left">
                     <span class="element">Year</span>
-                    <span class="data">@Model.Year</span>
+                    <span class="data">@Model.course.Year</span>
                 </div>
                 <div class="right">
                     <span class="element">Semester</span>
-                    <span class="data">@Model.Semester</span>
+                    <span class="data">@Model.course.Semester</span>
                 </div>
             </li>
             <li class="fourth">
                 <div class="left">
                     <span class="element">Creadits / Hours</span>
-                    <span class="data">@Model.Credits / 72,00</span>
+                    <span class="data">@Model.course.Credits / 72,00</span>
                 </div>
                 <div class="right">
                     <span class="element">Total Places Count</span>
@@ -59,7 +63,7 @@
             <li class="sixth">
                 <div class="left">
                     <span class="element">Language</span>
-                    <span class="data">@Model.Language</span>
+                    <span class="data">@Model.course.Language</span>
                 </div>
             </li>
         </ul>
@@ -75,10 +79,10 @@
             </ul>
         </div>
         <div class="tab_con" id='tabCon'>
-            <div class="tab-item" style="display: block;">@Html.Raw(@Model.Requirements)</div>
-            <div class="tab-item" style="display: none;">@Html.Raw(@Model.Annotation)</div>
-            <div class="tab-item" style="display: none;">@Html.Raw(@Model.Material)</div>
-            <div class="tab-item" style="display: none;">@Html.Raw(@Model.Literature)</div>
+            <div class="tab-item" style="display: block;">@Html.Raw(@Model.course.Requirements)</div>
+            <div class="tab-item" style="display: none;">@Html.Raw(@Model.course.Annotation)</div>
+            <div class="tab-item" style="display: none;">@Html.Raw(@Model.course.Material)</div>
+            <div class="tab-item" style="display: none;">@Html.Raw(@Model.course.Literature)</div>
         </div>
     </div>
 
@@ -93,13 +97,100 @@
         </div>
         <div class="tab_con2" id='tabCon2'>
             <div class="tab-item" style="display: block;">
-                <img src="~/uploads/@await UserService.GetTeacher(Model.CreatorId)" style="height:100px; width:100px" class="circle" />
-                <span>@Model.Creator.FullName</span>
+                <img src="~/uploads/@await UserService.GetTeacher(Model.course.CreatorId)" style="height:100px; width:100px" class="circle" />
+                <span>@Model.course.Creator.FullName</span>
             </div>
-            <div class="tab-item" style="display: none;">Empty</div>
-            <div class="tab-item" style="display: none;">Empty</div>
-            <div class="tab-item" style="display: none;">Empty</div>
-        </div>
+            <div class="tab-item" style="display: none;">
+                @foreach (var item in Model.course.StudentCourses)
+                {
+                    <img src="~/uploads/@await UserService.GetTeacher(item.StudentId)" style="height:100px; width:100px" class="circle" />
+                    <span>@item.Student.FullName</span>
+                }
+            </div>
+            <div class="tab-item" style="display: none;">
+                <form method="post" asp-action="Create" asp-controller="Schedules" asp-route-courseId="@Model.course.Id">
+                    <div class="row" style="margin-left:0px;margin-right:0px;">
+                        <div class="form-group col-md-2">
+                            <label style="text-indent:0em;">Day of week</label>
+                            <select asp-for="createScheduleViewModel.Day" class="form-control">
+                                <option>Monday</option>
+                                <option>Tuesday</option>
+                                <option>Wednesday</option>
+                                <option>Thursday</option>
+                                <option>Friday</option>
+                                <option>Saturday</option>
+                                <option>Sunday</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>Building</label>
+                            <input asp-for="createScheduleViewModel.Building" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>Class</label>
+                            <input asp-for="createScheduleViewModel.Class" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>Start time</label>
+                            <input asp-for="createScheduleViewModel.StartTime" type="datetime-local" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label>End time</label>
+                            <input asp-for="createScheduleViewModel.EndTime" type="datetime-local" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-2">
+                            <button class="btn btn-primary" style="margin-top:30px">Create</button>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-left:0px;margin-right:0px;">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Day of week</th>
+                                    <th scope="col">Building</th>
+                                    <th scope="col">Class</th>
+                                    <th scope="col">Star time</th>
+                                    <th scope="col">End time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.course.Schedules)
+                                {
+                                    <tr>
+                                        <td>@item.Day</td>
+                                        <td>@item.Building</td>
+                                        <td>@item.Class</td>
+                                        <td>@item.StartTime</td>
+                                        <td>@item.EndTime</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+            <div class="tab-item" style="display: none;">
+                <form method="post" asp-action="Create" asp-controller="Notifications" asp-route-courseId="@Model.course.Id">
+                    <div class="row" style="margin-left:0px;margin-right:0px;margin-top:15px;">
+                        <div class="form-group col-md-6">
+                            <input asp-for="createNotificationViewModel.text" placeholder="notification text" class="form-control" />
+                        </div>
+                        <div class="form-group col-md-2">
+                            <button class="btn btn-primary">Add</button>
+                        </div>
+                    </div>
+                </form>
+                @foreach (var item in Model.course.Notifications)
+                {
+                    <div class="row" style="margin-left:15px;margin-right:0px;">
+                        <svg style="margin-top:5px" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5V2zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1H4z" />
+                        </svg>@item.Text
+                    </div>
+                    <div style="color:#C1BBBB;margin-left:15px">@item.Created.ToShortTimeString()</div>
+                    <hr style="margin:0px; margin-bottom: 4px"/>
+                }
+            </div>
     </div>
 
 

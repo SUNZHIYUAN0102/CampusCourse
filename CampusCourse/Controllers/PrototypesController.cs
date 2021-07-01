@@ -1,6 +1,7 @@
 ﻿using CampusCourse.Data;
 using CampusCourse.Models;
 using CampusCourse.Models.PrototypeViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,10 +23,6 @@ namespace CampusCourse.Controllers
             this.context = context;
             this.userManager = userManager;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
 
         [HttpGet]
         public async Task<IActionResult> Details(Guid id)
@@ -37,6 +34,7 @@ namespace CampusCourse.Controllers
             return View(prototype);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Create(Guid groupId)
         {
@@ -48,6 +46,7 @@ namespace CampusCourse.Controllers
             return View(new CreatePrototypeViewModel());
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Guid? groupId, CreatePrototypeViewModel model)
@@ -80,6 +79,7 @@ namespace CampusCourse.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> Edit(Guid? id)
         {
@@ -103,6 +103,7 @@ namespace CampusCourse.Controllers
             return this.View(model);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(Guid? id, EditPrototypeViewModel model)
@@ -129,6 +130,7 @@ namespace CampusCourse.Controllers
             return this.View();
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)

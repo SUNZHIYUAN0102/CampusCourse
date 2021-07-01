@@ -149,7 +149,7 @@ h1 {
 .tab2 {
     margin: 40px auto;
     width: 900px;
-    height: 200px;
+    height: auto;
     overflow: hidden;
 }
 
@@ -181,7 +181,6 @@ h1 {
 .tab_con2 {
     width: 100%;
     margin-top: 60px;
-    text-indent: 2em;
     border: 1px solid black;
 }
 

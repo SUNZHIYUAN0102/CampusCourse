@@ -1,6 +1,7 @@
 ﻿using CampusCourse.Data;
 using CampusCourse.Models;
 using CampusCourse.Models.CourseViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,7 @@ namespace CampusCourse.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin, Teacher")]
         [HttpGet]
         public async Task<IActionResult> Create(Guid? prototypeId)
         {
@@ -46,6 +48,7 @@ namespace CampusCourse.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Admin, Teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Guid? prototypeId, CreateCourseViewModel model)
@@ -86,11 +89,70 @@ namespace CampusCourse.Controllers
         public async Task<IActionResult> Details(Guid id)
         {
             var course = await context.Courses
+                .Include(x => x.Schedules)
+                .Include(x => x.Notifications)
+                .Include(x => x.StudentCourses)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
-            return View(course);
+            return View(new CourseDetailViewModel { course=course});
         }
 
+        [Authorize(Roles = "Admin, Teacher")]
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            var course = await this.context.Courses
+                .SingleOrDefaultAsync(x => x.Id == id);
+            var prototype = course.Prototype;
+
+            var model = new EditCourseViewModel()
+            {
+                Name = course.Name,
+                Credits = course.Credits,
+                Language = course.Language,
+                Requirements = course.Requirements,
+                Annotation = course.Annotation,
+                Material = course.Material,
+                Literature = course.Literature,
+                Year = course.Year,
+                Semester = course.Semester,
+                TotalStudents = course.TotalStudents,
+                MinStudents = course.MinStudents
+            };
+
+            return this.View(model);
+        }
+
+        [Authorize(Roles = "Admin, Teacher")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(Guid id, EditCourseViewModel model)
+        {
+            var course = await this.context.Courses
+                .SingleOrDefaultAsync(x => x.Id == id);
+            var prototype = course.Prototype;
+            if(this.ModelState.IsValid)
+            {
+                course.Name = model.Name;
+                course.Credits = model.Credits;
+                course.Language = model.Language;
+                course.Requirements = model.Requirements;
+                course.Annotation = model.Annotation;
+                course.Material = model.Material;
+                course.Literature = model.Language;
+                course.Year = model.Year;
+                course.Semester = model.Semester;
+                course.TotalStudents = model.TotalStudents;
+                course.MinStudents = model.MinStudents;
+                await this.context.SaveChangesAsync();
+                return RedirectToAction("Index", "Groups");
+            };
+
+
+            return this.View(model);
+        }
+
+        [Authorize(Roles = "Admin, Teacher")]
         public async Task<IActionResult> Delete(Guid? id)
         {
             if (id == null)

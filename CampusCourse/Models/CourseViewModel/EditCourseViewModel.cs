@@ -1,41 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CampusCourse.Models
+namespace CampusCourse.Models.CourseViewModel
 {
-    public class Course
+    public class EditCourseViewModel
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
-
+        [Required]
         public string Name { get; set; }
-
+        [Required]
         public int Credits { get; set; }
-
+        [Required]
         public string Year { get; set; }
+        [Required]
         public string Semester { get; set; }
+        [Required]
         public int TotalStudents { get; set; }
+        [Required]
         public int MinStudents { get; set; }
-
+        [Required]
         public string Language { get; set; }
-
+        [Required]
         public string Requirements { get; set; }
-
+        [Required]
         public string Annotation { get; set; }
-
+        [Required]
         public string Material { get; set; }
-
+        [Required]
         public string Literature { get; set; }
-
-        public string CreatorId { get; set; }
-        public User Creator { get; set; }
-
-        public Guid PrototypeId { get; set; }
-        public Prototype Prototype { get; set; }
-        public ICollection<StudentCourse> StudentCourses { get; set; }
-        public ICollection<Schedule> Schedules { get; set; }
-        public ICollection<Notification> Notifications { get; set; }
-        public ICollection<Review> Reviews { get; set; }
     }
 }
